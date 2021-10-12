@@ -1,6 +1,6 @@
 //local storage
 const db = {
-    user: [
+    users: [
         {
             id:1,
             name: "Jassyra",

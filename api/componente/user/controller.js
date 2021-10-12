@@ -8,6 +8,7 @@
  */
 
 import { response } from "../../../network";
+import { list } from "../../../store/dummy";
 
 /*----------POST----------*/
 export const login = (req, res) => {
@@ -60,4 +61,12 @@ export const deleteUser = (req, res) => {
     res,
     data: { id },
   });
+};
+
+//LISTA DE USUARIOS
+export const showAll = async (req, res) => {
+  //aca traigo la lista de usuarios
+  const users = await list("users");
+
+  return response({res, data: users});
 };
