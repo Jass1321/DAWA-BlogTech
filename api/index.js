@@ -2,12 +2,15 @@ import express from "express";
 import userRouter from "./componente/user";
 import storyRouter from "./componente/story";
 import authRouter from "./componente/auth";
+import commentRouter  from "./componente/comments";
 import { port, base_url } from "../config/config";
 import { checkToken } from "../auth";
 import { Server as WebSocketServer } from "socket.io";
 import http from "http";
 //import router from "./router";
 //const express = require('express');
+
+import { saveComment } from "./componente/comments/controller";
 
 const app = express();
 const server = http.createServer(app);
@@ -50,7 +53,14 @@ io.on("connection", (socket) => {
       );
   })
 
- // socket.emit(new:)
+  //socket.emit("new:comment", "Escribe un comentario");
+  //? Evento para guardar comentarios para
+  // * Recibe el comentario desde el cliente y ademas lo guarda
+  socket.on("new:comment", async (body) => {
+    const res = await saveComment(body);
+    //* Una vez que se guardo el comentario le response al cliente que todo ok
+    socket.emit("save:comment", res);
+  });
 });
 
 //? esto sirve paa poder leer el body
@@ -61,6 +71,7 @@ app.use(`${base_url}/auth`, authRouter);
 app.use(`${base_url}/user`, checkToken, userRouter);
 app.use(`${base_url}/user/:user_id/story`,checkToken, storyRouter);
 app.use(`${base_url}/story`,checkToken, storyRouter);
+app.use(`${base_url}/comments`, commentRouter);
 
 server.listen(port, () => 
   console.log(`listening on port http://localhost:${port}`)

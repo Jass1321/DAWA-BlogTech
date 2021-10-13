@@ -35,6 +35,13 @@ const db = {
             user_id: "USER02",
         },
     ],
+    comments: [
+        {
+            id: "lana",
+            comment: "leviosa",
+            author: "kkaka",
+        }
+    ]
 };
 
 //Aqui vamos a poner las ope basicas - CRUD
