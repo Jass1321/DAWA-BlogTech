@@ -33,8 +33,7 @@
   return response({ res, data: story });
  };
  
- 
-//---LISTA DE USUARIOS---
+//---LISTA DE HISTORIAS---
 export const showAllStory = async (req, res) => {
   const stories = await list(STORY_TABLE);
   return response({res, data: stories});
@@ -67,5 +66,4 @@ export const deleteStory = async (req, res) => {
   }
 
   return response({ res, data: { success: "History deleted successfully!" } });
-
 };

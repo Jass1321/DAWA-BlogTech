@@ -17,7 +17,6 @@ userRouter.route("/update/:id").put(updateUser);
 userRouter.route("/delete/:id").delete(deleteUser);
 userRouter.route("/list").get(showAll); 
 
-
-
 //? Usamos export default cuando solamente hay una cosa que exportar
 export default userRouter;
+

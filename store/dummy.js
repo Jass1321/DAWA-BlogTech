@@ -38,8 +38,7 @@ const db = {
 };
 
 //Aqui vamos a poner las ope basicas - CRUD
-
-//*todo esto debe cpn asynce await
+//*todo esto debe ser con asynce await
 export const list = async (table) => {
     return await db[table];
 };
