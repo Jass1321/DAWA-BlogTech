@@ -1,14 +1,23 @@
 import express from "express";
-import {deleteUser, login, resetPassword, showAll, showUser, signUp, updateUser} from './controller';
+import { checkToken } from "../../../auth";
+import {deleteUser, resetPassword, showAll, showUser, updateUser} from './controller';
 
 /* networks es que exporta las rutas*/ 
 const userRouter = express.Router();
 
-userRouter.route("/login").post(login);
-userRouter.route("/signup").post(signUp);
+/* 1° FORMA DE USAR
+//Lo que debo proteger es lo sgt
+//?para poder proteger mi ruta debo usar all()
+userRouter.route("/show/:id").all(checkToken).get(showUser);
+ */
+
 userRouter.route("/reset/:id").post(resetPassword);
-userRouter.route("/read/:id").get(showUser);
+userRouter.route("/show/:id").get(showUser);
 userRouter.route("/update/:id").put(updateUser);
 userRouter.route("/delete/:id").delete(deleteUser);
-userRouter.route("/list").get(showAll);
+userRouter.route("/list").get(showAll); 
+
+
+
+//? Usamos export default cuando solamente hay una cosa que exportar
 export default userRouter;
