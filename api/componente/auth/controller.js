@@ -17,7 +17,8 @@ export const login = async (req, res) => {
   
     return response ({
       res,
-      data: {user, token}
+      data: {user, token},
+      status: 201
     });
   };
   
@@ -32,5 +33,5 @@ export const login = async (req, res) => {
       password: user.password,
     };
     const users = await store(USER_TABLE, data);
-    return response({ res, data: users});
+    return response({ res, data: users, status: 201});
   };

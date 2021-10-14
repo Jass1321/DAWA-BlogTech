@@ -61,5 +61,5 @@ export const deleteUser = async (req, res) => {
     return response({ res, ok: false, data: { error: "User not found" } });
   }
 
-  return response({ res, data: { success: "User deleted successfully!" } });
+  return response({ res, ok:true, data: { success: "User deleted successfully!" }});
 }; 

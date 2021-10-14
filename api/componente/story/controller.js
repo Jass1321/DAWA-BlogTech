@@ -23,7 +23,7 @@
       user_id: story.user_id,
     };
     const stories = await store(STORY_TABLE, data);
-    return response({ res, data: stories});
+    return response({ res, data: stories, status: 201});
  };
  
  /*----------GET----------*/
