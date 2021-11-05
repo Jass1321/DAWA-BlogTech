@@ -6,15 +6,21 @@ import authRouter from "./componente/auth";
 import commentRouter  from "./componente/comments";
 
 import { saveComment } from "./componente/comments/controller";
-import { base_url } from "../config/config";
+import { base_url , db_url} from "../config/config";
 import { checkToken } from "../auth";
 import { Server as WebSocketServer } from "socket.io";
 import http from "http";
+
+//import db
+import connect  from "../db";
 
 // Se encargar cargar todas las dependencias, rutas, en si todo la aplicacion
 export const app = express();
 export const server = http.createServer(app);
 export const io = new WebSocketServer(server);
+
+// connect recibe la url de conexion
+connect(db_url);
 
 //* Cargando la carpeta public
 app.use(express.static(__dirname + "/public"));

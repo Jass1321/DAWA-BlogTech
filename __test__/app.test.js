@@ -98,7 +98,6 @@ describe("Eliminacion de un usuario", () => {
   });
 });
 
-
 /**------------ STORY------------ */
 // Ahora vamos a CREAR una HISTORIA
 describe("Creacion historia by usuario", () => {
@@ -109,7 +108,7 @@ describe("Creacion historia by usuario", () => {
       text: "ARGENTINA-PERU",
       dataTime: "2021-10-23",
       user_id: "USER01",
-    };
+    }
 
     const result = await request(app)
       .post(`${base_url}/user/USER01/story/create`)
@@ -132,7 +131,6 @@ describe("Lista de una historia", () => {
     expect(result.ok).toBe(true);
   });
 });
-
 
 // Ahora test voy a los LEER a TODAS las HISTORIAS de un USUARIO
 describe("Lista de todos las historias", () => {
