@@ -1,4 +1,3 @@
-//*todo esto debe ser con asynce await
 export const list = async (table) => {
     return await db[table];
 };
@@ -12,6 +11,8 @@ export const list = async (table) => {
 
 export const store = async (model, data) => {
     //*Creo un dato y retorno la lista completa
+    // await db[table].push(data);
+    // return await list(table);
     const object = new model(data);
     object.save();
 };

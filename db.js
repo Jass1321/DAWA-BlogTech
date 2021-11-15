@@ -8,13 +8,20 @@ mongoose.Promise = global.Promise;
  * 
  * @param {string} url 
  */
-//*funcion que sirve para conectar a la bd
+//*funcion que sirve para conectar a la bd-v6
 const connect = async (url) => {
+    mongoose.connect(url);
+    console.log("[db] connected");
+};
+
+export default connect;
+
+/**Moongose v7>>>>
+ * const connect = async (url) => {
     mongoose.connect(url, {
         userNewUrlParser: true,
     });
 
     console.log("[db] connected");
 };
-
-export default connect;
+ */
