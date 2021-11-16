@@ -1,83 +1,77 @@
-//local storage
-const db = {
-    users: [
-        {
-            //debe ser texto para que no compare con un numero
-            id:"USER01",
-            name: "Jassyra",
-            last_name: "Espinoza",
-            email: "jass1321@gmail.com",
-            password: "J4SS",
-        },
-        {
-            id: "USER02",
-            name: "Kiara",
-            last_name: "Pinedo",
-            email: "kiara5678@gmail.com",
-            password: "K14R4",
-        },
-    ],
-    stories: [
-        {
-            id: "H100",
-            title: "Historia 1",
-            author: "Jaime Gómez",
-            text: "Programar es un arte",
-            dataTime: "2012-04-23",
-            user_id: "USER01",
-        },
-        {
-            id: "H200",
-            title: "Historia 2",
-            author: "Linder Hassinger",
-            text: "Okei chicos chicas xd",
-            dataTime: "2021-10-23",
-            user_id: "USER02",
-        },
-    ],
-    comments: [
-        {
-            id: "lana",
-            comment: "leviosa",
-            author: "kkaka",
-        }
-    ]
+import {  Model } from "mongoose";
+
+/**
+ * Listar los datos en base al modelo que recibe 
+ * @param {Model} model
+ * @returns {Array} 
+ */
+//^cuando es inline return esta implicito
+export const list = async (model) => await model.find();
+
+/**
+ * Guardar info
+ * @param {Model} model 
+ * @param {Array<any>} data 
+ * @returns 
+ */
+export const store = async (model, data) => {
+    const object = new model(data);
+    object.save();
 };
 
-//Aqui vamos a poner las ope basicas - CRUD
-//*todo esto debe ser con asynce await
-export const list = async (table) => {
-    return await db[table];
+//*para el login 
+export const findLogin = async (model, key, value) => {
+    const data = model.findOne({ key: value });
+    return data;
 };
 
-export const store = async (table, data) => {
-    //*Creo un dato y retorno la lista completa
-    await db[table].push(data);
-    return await list(table);
-};
 
-export const find = async (table, id) => {
-    //? Primero obtengo la lista de datos
-    const dataList = await list(table);
-    //? Buscar por id
-    return  dataList.find((data) => data.id === id);
-};
+/**
+ * Buscar un usuario ya sea por id o cualquier param
+ * @param {{model: Model, key: string, value: string}} parametros
+ */
 
-export const refresh = async (table, id) => {
-    const dataList = await list(table);
-    return  dataList.find((data) => data.id === id);
-}
-
-export const remove = async (table, id) => {
-    const dataList = await list(table);
-    //* primero debemos encontrar el indice
-    const index = dataList.findIndex((data) => data.id === id);
-
-    if (index === -1) {
+ export const find = async ({model, key = "_id", value}) => {
+    try {
+        const data = await model.findOne({[`${key}`]: value});
+        return data;
+    } catch (error) {
         return false;
     }
-    await db[table].splice(index, 1);
-    return true;
+};
+
+/**
+ * Funcion para actualizar
+ * @param {{model: Model, id: string, data: Array}} parametros
+ * @returns {Array?}
+ */
+
+export const refresh = async ({model, id, data}) => {
+    try {
+        //data es un objeto que tiene las columnas del modelo
+        await model.findByIdAndUpdate(id, data);
+        return await list(model);
+
+    } catch (error) {
+        return false;
+    }
+};
+
+/**
+    * Funcion para eliminar datos
+    * @param {Model} model
+    * @param {String} id
+    */
+
+export const remove = async (model, id) => {
+    try {
+        await model.findByIdAndRemove(id);
+        //retorna la lista del modelo
+        return await list(model);
+    } catch (err) {
+        return false;
+    }
+
 };
 
       

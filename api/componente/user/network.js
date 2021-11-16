@@ -15,7 +15,7 @@ userRouter.route("/reset/:id").post(resetPassword);
 userRouter.route("/show/:id").get(showUser);
 userRouter.route("/update/:id").put(updateUser);
 userRouter.route("/delete/:id").delete(deleteUser);
-userRouter.route("/list").get(showAll); 
+userRouter.route("/").get(showAll); 
 
 //? Usamos export default cuando solamente hay una cosa que exportar
 export default userRouter;

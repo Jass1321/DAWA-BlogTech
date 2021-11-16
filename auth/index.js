@@ -2,6 +2,7 @@ import jwt  from "jsonwebtoken";
 import { secret } from "../config/config";
 import { response } from "../network";
 
+
 // Existens 2 funciones principales en JWT
 //? sign => Se encarga de generar el token
 //? - recive 2 cosas,(payload, secret)

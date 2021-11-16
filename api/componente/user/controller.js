@@ -9,8 +9,8 @@
 
 import { response } from "../../../network";
 import { list, find, remove, refresh } from "../../../store/dummy";
+import userModel from "./model";
 
-const USER_TABLE = "users";
 
 /*----------POST----------*/
 export const resetPassword = (req, res) => {
@@ -24,42 +24,38 @@ export const resetPassword = (req, res) => {
 /*----------GET----------*/
 export const showUser = async (req, res) => {
   const { id } = req.params;
-  const user = await find(USER_TABLE, id);
+  const user = await find({ value: id, model: userModel });
+  if (!user) {
+    response({res, ok: false, data: { error : "error data nor found"}, status: 500});
+  }
   return response({ res, data:  user  });
 };
 
 //LISTA DE USUARIOS
 export const showAll = async (req, res) => {
-  //aca traigo la lista de usuarios
-  const users = await list(USER_TABLE);
-
-  return response({res, data: users});
+  response({res, data: await list(userModel)});
 };
 
 /*----------UPDATE----------*/
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const user = req.body;
-  const  awa = { 
-    name: user.name, 
-    last_name: user.last_name, 
-    email: user.email,
-    password: user.password,
-  };
-  const users = await refresh(USER_TABLE, id);
-  if (!users) {
-    return response({ res, ok: false, data: { error: "User not found" } });
+  const users = await refresh({ model: userModel, id, data: req.body });
+  if (!users) { 
+    return response({
+      res, ok: false, data: { error : "error data nor found"}, status: 500
+    });
   }
-  return response({ res, data:  awa });
+  return response({ res, data:  users });
 };
 
 /*----------DELETE----------*/
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
-  const user = await remove(USER_TABLE, id);
+  const user = await remove(userModel, id);
   if (!user) {
-    return response({ res, ok: false, data: { error: "User not found" } });
+    return response({ 
+      res, ok: false, data: { error: "User not found" } , status: 500
+    });
   }
-
-  return response({ res, ok:true, data: { success: "User deleted successfully!" }});
+  return response({ res, data: { success: "User deleted successfully!" }});
 }; 
