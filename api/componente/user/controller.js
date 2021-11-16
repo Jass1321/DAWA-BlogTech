@@ -39,9 +39,11 @@ export const showAll = async (req, res) => {
 /*----------UPDATE----------*/
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const users = await upsert({ model: userModel, id, data: req.body });
-  if (!users) {
-    response({res, ok: false, data: { error : "error data nor found"}, status: 500});
+  const users = await refresh({ model: userModel, id, data: req.body });
+  if (!users) { 
+    return response({
+      res, ok: false, data: { error : "error data nor found"}, status: 500
+    });
   }
   return response({ res, data:  users });
 };
@@ -49,9 +51,11 @@ export const updateUser = async (req, res) => {
 /*----------DELETE----------*/
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
-  const user = await remove(USER_TABLE, id);
+  const user = await remove(userModel, id);
   if (!user) {
-    return response({ res, ok: false, data: { error: "User not found" } });
+    return response({ 
+      res, ok: false, data: { error: "User not found" } , status: 500
+    });
   }
-  return response({ res, ok:true, data: { success: "User deleted successfully!" }});
+  return response({ res, data: { success: "User deleted successfully!" }});
 }; 

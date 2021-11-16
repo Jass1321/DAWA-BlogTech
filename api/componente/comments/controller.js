@@ -2,22 +2,32 @@ import { response } from "../../../network";
 import { store, list, find, remove, refresh } from "../../../store/dummy";
 import  commentModel  from "./model";
 
+/*----------POST----------*/
+export const saveComment = async (req, res) => {
+    const comment = req.body;
+    /*creamos el data del user nuevo */
+    const  data = { 
+      text: comment.text,
+      user_id: comment.user_id
+    };
+    const comments = await store(commentModel, data);
+    return response({ res, data: comments, status: 201});
+};
+
 /*----------GET----------*/
 export const getComments = async (req, res) => {
     return response({res, data: await list(commentModel)});
 }
+
 export const showComments = async (req, res) => {
     const {id} = req.params;
-    const comment = await find(commentModel, "id", id);
+    const comment = await find({value: id, model: commentModel});
+    
+  if (!comment) {
+    response({ res, ok: false, status: 404, data: "error, comment not found"
+    });
+}
     return response({res, data: comment});
-};
-
-/*----------POST----------*/
-export const saveComment = async (body) => {
-    const comment = await store(commentModel, body);
-    return {
-        ok: true, message: comment,
-      };
 };
 
 /*----------UPDATE----------*/

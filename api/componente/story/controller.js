@@ -47,7 +47,7 @@ export const showAllStory = async (req, res) => {
 /*----------UPDATE----------*/
 export const updateStory = async (req, res) => {
   const { id } = req.params;
-  const story = await upsert({model: storyModel, id: id, data: req.body}); //busca la story a editar por id
+  const story = await refresh({model: storyModel, id: id, data: req.body}); //busca la story a editar por id
 
   if (!story) {
     return response({ res, ok: false, data: { error: "History not found" }, status: 404 });

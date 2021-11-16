@@ -19,6 +19,13 @@ export const store = async (model, data) => {
     object.save();
 };
 
+//*para el login 
+export const findLogin = async (model, key, value) => {
+    const data = model.findOne({ key: value });
+    return data;
+};
+
+
 /**
  * Buscar un usuario ya sea por id o cualquier param
  * @param {{model: Model, key: string, value: string}} parametros

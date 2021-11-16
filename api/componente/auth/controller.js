@@ -1,5 +1,5 @@
 import { sign } from "../../../auth";
-import { store, find } from "../../../store/dummy";
+import { store, findLogin } from "../../../store/dummy";
 import { response } from "../../../network";
 import  userModel  from "../user/model";
 import { hash, compare } from "../../../helper/encrypt";
@@ -16,7 +16,7 @@ export const login = async (req, res) => {
     const token =  await sign(payload);
 
     //? primer  buscar a mi usario
-    const userData = await find(userModel, "email", user.email);
+    const userData = await findLogin(userModel, "email", user.email);
     //? luego ver si existe
     if (!userData) return;
     //? y comparo la contra
@@ -36,7 +36,8 @@ export const login = async (req, res) => {
     return response ({
       res,
       data: {user, token},
-      status: 200
+      status: 201
+
     });
   };
   

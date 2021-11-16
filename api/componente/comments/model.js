@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 //* ojito por default mongo le pone un id ******
 
  const commentSchema = new mongoose.Schema({
-    comment: {
+    text: {
       type: String,
       required: true,
     },
