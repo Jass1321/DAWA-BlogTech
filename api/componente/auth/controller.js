@@ -14,6 +14,7 @@ export const login = async (req, res) => {
     };
 
     const token =  await sign(payload);
+
     //? primer  buscar a mi usario
     const userData = await find(userModel, "email", user.email);
     //? luego ver si existe
@@ -35,7 +36,7 @@ export const login = async (req, res) => {
     return response ({
       res,
       data: {user, token},
-      status: 201
+      status: 200
     });
   };
   

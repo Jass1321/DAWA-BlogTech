@@ -1,7 +1,7 @@
 
 import mongoose from "mongoose";
 /**
- * id, comment, author
+ * comment, author-> user_id
  */
 //2° definir los datos 
 //* ojito por default mongo le pone un id ******
@@ -11,10 +11,7 @@ import mongoose from "mongoose";
       type: String,
       required: true,
     },
-    author: {
-      type: String,
-      required: true,
-    }
+    user_id: { type: String }
   });
 
 const commentModel = mongoose.model("comments", commentSchema);

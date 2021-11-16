@@ -5,8 +5,8 @@ import {createStory,  readStory, updateStory, deleteStory, showAllStory} from '.
 const storyRouter = express.Router();
 
 storyRouter.route("/create").post(createStory);
-storyRouter.route("/read/:id").get(readStory);
-storyRouter.route("/list/").get(showAllStory);
+storyRouter.route("/stroy/:id").get(readStory);
+storyRouter.route("/stories").get(showAllStory);
 storyRouter.route("/update/:id").put(updateStory);
 storyRouter.route("/delete/:id").delete(deleteStory);
 
