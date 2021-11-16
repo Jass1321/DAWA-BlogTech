@@ -7,7 +7,8 @@
  import { nanoid } from "nanoid";
  import { response } from "../../../network";
  import { list, find, remove, refresh, store } from "../../../store/dummy";
-
+ import  storyModel  from "./model";
+ 
  const STORY_TABLE = "stories";
 
  /*----------POST----------*/
@@ -15,14 +16,13 @@
    const story = req.body;
     /*creamos el data del user nuevo */
     const  data = { 
-      id: nanoid(), 
       title: story.title,
       author: story.author,
       text: story.text,
       dataTime: story.dataTime,
       user_id: story.user_id,
     };
-    const stories = await store(STORY_TABLE, data);
+    const stories = await store(storyModel, data);
     return response({ res, data: stories, status: 201});
  };
  

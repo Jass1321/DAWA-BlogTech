@@ -1,6 +1,11 @@
-export const list = async (table) => {
-    return await db[table];
-};
+
+import {  Model } from "mongoose";
+/**
+ * Se encarga de listar los datos en base al modelo que recibe (es una Promesa)
+ * @param {Model} model
+ * @returns {Array} Datos encontrados
+ */
+ export const list = async (model) => await model.find();
 
 /**
  * 
@@ -10,18 +15,13 @@ export const list = async (table) => {
  */
 
 export const store = async (model, data) => {
-    //*Creo un dato y retorno la lista completa
-    // await db[table].push(data);
-    // return await list(table);
     const object = new model(data);
     object.save();
 };
 
-export const find = async (table, id) => {
-    //? Primero obtengo la lista de datos
-    const dataList = await list(table);
-    //? Buscar por id
-    return  dataList.find((data) => data.id === id);
+export const find = async (model, key, value) => {
+    const data = model.findOne({ key: value });
+    return data;
 };
 
 export const refresh = async (table, id) => {

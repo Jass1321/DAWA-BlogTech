@@ -62,4 +62,4 @@ app.use(`${base_url}/auth`, authRouter);
 app.use(`${base_url}/user`, checkToken, userRouter);
 app.use(`${base_url}/user/:user_id/story`,checkToken, storyRouter);
 app.use(`${base_url}/story`,checkToken, storyRouter);
-app.use(`${base_url}/comments`, commentRouter);
+app.use(`${base_url}/comment`, commentRouter);

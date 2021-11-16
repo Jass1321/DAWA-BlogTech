@@ -1,20 +1,18 @@
 import { response } from "../../../network";
 import { nanoid } from "nanoid";
 import { store, list } from "../../../store/dummy";
+import  commentModel  from "./model";
 
 export const getComments = async (req, res) => {
-    const comments = await list("comments");
+    const comments = await list(commentModel);
 
     response({res, data: comments});
 }
 
 export const saveComment = async (body) => {
-    //? tengo que modificar para agregar un ID
-    body.id = nanoid();
-
-    await store("comments", body);
+    const comment = await store(commentModel, body);
     return {
         ok: true,
-        message: body,
+        message: comment,
       };
 };
